@@ -1,6 +1,7 @@
 // Add these to your existing imports
 const nodemailer = require('nodemailer');
 const express = require('express');
+const Package = require('../models/Package');
 const router = express.Router();
 
 // Your existing route
