@@ -1,0 +1,43 @@
+<div class="card package-card h-100 shadow-sm">
+    <% if(packageItem.images && packageItem.images.length > 0) { %>
+      <div class="position-relative package-image-container">
+        <img src="<%= packageItem.images[0].startsWith('http') ? packageItem.images[0] : '/img/packages/' + packageItem.images[0] %>" 
+             class="card-img-top package-image" 
+             alt="<%= packageItem.destination %>">
+        <div class="package-category badge bg-primary position-absolute top-0 end-0 m-2">
+          <%= packageItem.category === 'international' ? 'International' : 
+              packageItem.category === 'local' ? 'Local' : 'Fixed Departure' %>
+        </div>
+      </div>
+    <% } else { %>
+      <div class="card-img-top bg-light d-flex align-items-center justify-content-center" style="height: 200px;">
+        <i class="fas fa-image fa-3x text-muted"></i>
+      </div>
+    <% } %>
+    <div class="card-body">
+      <h5 class="card-title"><%= packageItem.destination %></h5>
+      <div class="d-flex justify-content-between mb-2">
+        <span class="badge bg-info text-dark"><i class="fas fa-clock me-1"></i> <%= packageItem.duration %></span>
+        <span class="badge bg-success"><%= packageItem.price %></span>
+      </div>
+      <div class="mb-2">
+        <% for(let i = 0; i < 5; i++) { %>
+          <% if(i < Math.floor(packageItem.rating)) { %>
+            <i class="fas fa-star text-warning"></i>
+          <% } else if(i < packageItem.rating) { %>
+            <i class="fas fa-star-half-alt text-warning"></i>
+          <% } else { %>
+            <i class="far fa-star text-warning"></i>
+          <% } %>
+        <% } %>
+        <small class="ms-1">(<%= packageItem.rating %>)</small>
+      </div>
+      <p class="card-text text-muted small"><%= packageItem.description.length > 100 ? packageItem.description.substring(0, 100) + '...' : packageItem.description %></p>
+    </div>
+    <div class="card-footer bg-white border-0">
+      <div class="d-flex justify-content-between">
+        <a href="/admin/packages/<%= packageItem.id %>" class="btn btn-sm btn-outline-primary"><i class="fas fa-eye me-1"></i> View</a>
+        <a href="/admin/packages/<%= packageItem.id %>/edit" class="btn btn-sm btn-outline-secondary"><i class="fas fa-edit me-1"></i> Edit</a>
+      </div>
+    </div>
+  </div>

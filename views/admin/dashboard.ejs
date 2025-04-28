@@ -1,0 +1,165 @@
+<%- include('../partials/header') %>
+
+<div class="row mb-4 align-items-center">
+  <div class="col">
+    <h2><i class="fas fa-tachometer-alt me-2"></i>Dashboard</h2>
+    <p class="text-muted">Welcome to the Travel Agency Admin Panel</p>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-xl-3 col-md-6 mb-4">
+    <div class="card border-left-primary shadow h-100 py-2">
+      <div class="card-body">
+        <div class="row no-gutters align-items-center">
+          <div class="col mr-2">
+            <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
+              Total Packages
+            </div>
+            <div class="h5 mb-0 font-weight-bold text-gray-800"><%= packageCounts.total %></div>
+          </div>
+          <div class="col-auto">
+            <i class="fas fa-suitcase fa-2x text-gray-300"></i>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-xl-3 col-md-6 mb-4">
+    <div class="card border-left-success shadow h-100 py-2">
+      <div class="card-body">
+        <div class="row no-gutters align-items-center">
+          <div class="col mr-2">
+            <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
+              International Packages
+            </div>
+            <div class="h5 mb-0 font-weight-bold text-gray-800"><%= packageCounts.international %></div>
+          </div>
+          <div class="col-auto">
+            <i class="fas fa-globe-americas fa-2x text-gray-300"></i>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-xl-3 col-md-6 mb-4">
+    <div class="card border-left-info shadow h-100 py-2">
+      <div class="card-body">
+        <div class="row no-gutters align-items-center">
+          <div class="col mr-2">
+            <div class="text-xs font-weight-bold text-info text-uppercase mb-1">
+              Local Packages
+            </div>
+            <div class="h5 mb-0 font-weight-bold text-gray-800"><%= packageCounts.local %></div>
+          </div>
+          <div class="col-auto">
+            <i class="fas fa-map-marked-alt fa-2x text-gray-300"></i>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-xl-3 col-md-6 mb-4">
+    <div class="card border-left-warning shadow h-100 py-2">
+      <div class="card-body">
+        <div class="row no-gutters align-items-center">
+          <div class="col mr-2">
+            <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">
+              Fixed Departure
+            </div>
+            <div class="h5 mb-0 font-weight-bold text-gray-800"><%= packageCounts.fixedDeparture %></div>
+          </div>
+          <div class="col-auto">
+            <i class="fas fa-calendar-alt fa-2x text-gray-300"></i>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="row mt-4">
+  <div class="col-md-6 mb-4">
+    <div class="card shadow">
+      <div class="card-header bg-primary text-white">
+        <h5 class="mb-0"><i class="fas fa-tasks me-2"></i>Quick Actions</h5>
+      </div>
+      <div class="card-body">
+        <div class="list-group">
+          <a href="/admin/packages/create" class="list-group-item list-group-item-action">
+            <i class="fas fa-plus-circle me-2"></i> Add New Package
+          </a>
+          <a href="/admin/packages?category=all" class="list-group-item list-group-item-action">
+            <i class="fas fa-list me-2"></i> View All Packages
+          </a>
+          <a href="/admin/packages/import/initial" class="list-group-item list-group-item-action">
+            <i class="fas fa-download me-2"></i> Import Initial Packages Data
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <div class="col-md-6 mb-4">
+    <div class="card shadow">
+      <div class="card-header bg-success text-white">
+        <h5 class="mb-0"><i class="fas fa-chart-line me-2"></i>Package Overview</h5>
+      </div>
+      <div class="card-body">
+        <canvas id="packageChart" width="400" height="220"></canvas>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script> 
+<script>
+    const packageCounts = <%- JSON.stringify(packageCounts || {}) %>;
+  </script>
+  
+<script>
+    
+  document.addEventListener('DOMContentLoaded', function() {
+    const ctx = document.getElementById('packageChart').getContext('2d');
+    const packageChart = new Chart(ctx, {
+      type: 'bar',
+      data: {
+        labels: ['International', 'Local', 'Fixed Departure'],
+        datasets: [{
+          label: 'Number of Packages',
+          data: [
+        Number(packageCounts.international || 0),
+        Number(packageCounts.local || 0),
+        Number(packageCounts.fixedDeparture || 0)
+        ],
+          backgroundColor: [
+            'rgba(54, 162, 235, 0.5)',
+            'rgba(75, 192, 192, 0.5)',
+            'rgba(255, 206, 86, 0.5)'
+          ],
+          borderColor: [
+            'rgba(54, 162, 235, 1)',
+            'rgba(75, 192, 192, 1)',
+            'rgba(255, 206, 86, 1)'
+          ],
+          borderWidth: 1
+        }]
+      },
+      options: {
+        scales: {
+          y: {
+            beginAtZero: true,
+            ticks: {
+              stepSize: 1
+            }
+          }
+        }
+      }
+    });
+  });
+</script>
+
+<%- include('../partials/footer') %>

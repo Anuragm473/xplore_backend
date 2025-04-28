@@ -1,0 +1,123 @@
+/* Global Styles */
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-color: #f8f9fc;
+}
+
+.sidebar {
+  height: 100%;
+}
+
+.sidebar .nav-link {
+  padding: 1rem;
+  border-radius: 0;
+  transition: all 0.3s;
+}
+
+.sidebar .nav-link:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+.sidebar .nav-link.active {
+  font-weight: bold;
+}
+
+/* Card Styles */
+.card {
+  border: none;
+  border-radius: 0.5rem;
+  box-shadow: 0 0.15rem 1.75rem 0 rgba(58, 59, 69, 0.1);
+  margin-bottom: 1.5rem;
+}
+
+.card-header {
+  border-bottom: 1px solid #e3e6f0;
+  background-color: #f8f9fc;
+}
+
+.card .border-left-primary {
+  border-left: 0.25rem solid #4e73df !important;
+}
+
+.card .border-left-success {
+  border-left: 0.25rem solid #1cc88a !important;
+}
+
+.card .border-left-info {
+  border-left: 0.25rem solid #36b9cc !important;
+}
+
+.card .border-left-warning {
+  border-left: 0.25rem solid #f6c23e !important;
+}
+
+/* Package Card Styles */
+.package-card {
+  transition: transform 0.3s ease;
+}
+
+.package-card:hover {
+  transform: translateY(-5px);
+}
+
+.package-image-container {
+  height: 200px;
+  overflow: hidden;
+}
+
+.package-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.5s;
+}
+
+.package-card:hover .package-image {
+  transform: scale(1.05);
+}
+
+/* Dashboard Styles */
+.dashboard .btn-block {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 2rem;
+  border-radius: 0.5rem;
+  transition: all 0.3s;
+}
+
+.dashboard .btn-block:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 0.5rem 1rem rgba(0,0,0,0.15);
+}
+
+/* Login Page */
+.auth-card {
+  max-width: 500px;
+  margin: 5rem auto;
+}
+
+/* Animations */
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.fadeIn {
+  animation: fadeIn 0.5s;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .sidebar {
+    position: static;
+    width: 100%;
+    min-height: auto;
+  }
+  
+  .package-image-container {
+    height: 150px;
+  }
+}

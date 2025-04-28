@@ -1,0 +1,161 @@
+<%- include('../../partials/header') %>
+
+<div class="d-flex justify-content-between align-items-center mb-4">
+  <div>
+    <h2><i class="fas fa-suitcase me-2"></i><%= packageItem.destination %></h2>
+    <p class="text-muted">
+      <% if (packageItem.category === 'international') { %>
+        <span class="badge bg-primary">International</span>
+      <% } else if (packageItem.category === 'local') { %>
+        <span class="badge bg-success">Local</span>
+      <% } else if (packageItem.category === 'fixedDeparture') { %>
+        <span class="badge bg-warning">Fixed Departure</span>
+      <% } %>
+      Package #<%= packageItem.id %>
+    </p>
+  </div>
+  <div>
+    <a href="/admin/packages/<%= packageItem.id %>/edit" class="btn btn-warning">
+      <i class="fas fa-edit me-1"></i> Edit
+    </a>
+    <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteModal">
+      <i class="fas fa-trash me-1"></i> Delete
+    </button>
+  </div>
+</div>
+
+<!-- Package Details -->
+<div class="card shadow mb-4">
+  <div class="card-header py-3">
+    <h6 class="m-0 font-weight-bold text-primary">Package Details</h6>
+  </div>
+  <div class="card-body">
+    <div class="row">
+      <div class="col-md-6">
+        <div id="packageCarousel" class="carousel slide mb-4" data-bs-ride="carousel">
+          <div class="carousel-inner rounded">
+            <% if (packageItem.images && packageItem.images.length > 0) { %>
+              <% packageItem.images.forEach((image, index) => { %>
+                <div class="carousel-item <%= index === 0 ? 'active' : '' %>" style="height: 300px;">
+                  <img src="<%= image %>" class="d-block w-100 h-100" style="object-fit: cover;" alt="<%= packageItem.destination %>">
+                </div>
+              <% }); %>
+            <% } else { %>
+              <div class="carousel-item active bg-light" style="height: 300px;">
+                <div class="d-flex justify-content-center align-items-center h-100">
+                  <i class="fas fa-image fa-4x text-muted"></i>
+                </div>
+              </div>
+            <% } %>
+          </div>
+          <% if (packageItem.images && packageItem.images.length > 1) { %>
+            <button class="carousel-control-prev" type="button" data-bs-target="#packageCarousel" data-bs-slide="prev">
+              <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+              <span class="visually-hidden">Previous</span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#packageCarousel" data-bs-slide="next">
+              <span class="carousel-control-next-icon" aria-hidden="true"></span>
+              <span class="visually-hidden">Next</span>
+            </button>
+          <% } %>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <table class="table">
+          <tbody>
+            <tr>
+              <th width="120">Destination</th>
+              <td><%= packageItem.destination %></td>
+            </tr>
+            <tr>
+              <th>Duration</th>
+              <td><%= packageItem.duration %></td>
+            </tr>
+            <tr>
+              <th>Price</th>
+              <td><%= packageItem.price %></td>
+            </tr>
+            <tr>
+              <th>Rating</th>
+              <td>
+                <div class="text-warning">
+                  <% for (let i = 1; i <= 5; i++) { %>
+                    <% if (i <= Math.floor(packageItem.rating)) { %>
+                      <i class="fas fa-star"></i>
+                    <% } else if (i - 0.5 <= packageItem.rating) { %>
+                      <i class="fas fa-star-half-alt"></i>
+                    <% } else { %>
+                      <i class="far fa-star"></i>
+                    <% } %>
+                  <% } %>
+                  <span class="ms-1">(<%= packageItem.rating %>)</span>
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <th>Category</th>
+              <td>
+                <% if (packageItem.category === 'international') { %>
+                  <span class="badge bg-primary">International</span>
+                <% } else if (packageItem.category === 'local') { %>
+                  <span class="badge bg-success">Local</span>
+                <% } else if (packageItem.category === 'fixedDeparture') { %>
+                  <span class="badge bg-warning">Fixed Departure</span>
+                <% } %>
+              </td>
+            </tr>
+            <tr>
+              <th>Created</th>
+              <td><%= new Date(packageItem.createdAt).toLocaleDateString() %></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    
+    <div class="mt-4">
+      <h5>Description</h5>
+      <p><%= packageItem.description %></p>
+    </div>
+    
+    <div class="mt-4">
+      <h5>Images</h5>
+      <div class="row">
+        <% packageItem.images.forEach(image => { %>
+          <div class="col-md-2 col-sm-4 col-6 mb-3">
+            <div class="card">
+              <img src="<%= image %>" class="card-img-top" alt="<%= packageItem.destination %>" style="height: 100px; object-fit: cover;">
+              <div class="card-body p-2">
+                <p class="card-text small text-truncate"><%= image %></p>
+              </div>
+            </div>
+          </div>
+        <% }); %>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Delete Modal -->
+<div class="modal fade" id="deleteModal" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Confirm Delete</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <p>Are you sure you want to delete "<%= packageItem.destination %>" package?</p>
+        <p class="text-danger">This action cannot be undone.</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+        <form action="/admin/packages/<%= packageItem.id %>?_method=DELETE" method="POST">
+          <button type="submit" class="btn btn-danger">Delete</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<%- include('../../partials/footer') %>

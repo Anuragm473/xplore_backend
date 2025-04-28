@@ -1,0 +1,151 @@
+<%- include('../../partials/header') %>
+
+<div class="d-flex justify-content-between align-items-center mb-4">
+  <div>
+    <h2><i class="fas fa-suitcase me-2"></i>Travel Packages</h2>
+    <p class="text-muted">
+      <% if (category === 'all') { %>
+        Showing all travel packages
+      <% } else if (category === 'international') { %>
+        Showing international travel packages
+      <% } else if (category === 'local') { %>
+        Showing local travel packages
+      <% } else if (category === 'fixedDeparture') { %>
+        Showing fixed departure travel packages
+      <% } %>
+    </p>
+  </div>
+  <div>
+    <a href="/admin/packages/create" class="btn btn-primary">
+      <i class="fas fa-plus-circle me-1"></i> Add New Package
+    </a>
+  </div>
+</div>
+
+<div class="card shadow mb-4">
+  <div class="card-header py-3 d-flex justify-content-between align-items-center">
+    <h6 class="m-0 font-weight-bold text-primary">Manage Packages</h6>
+    <div class="dropdown">
+      <button class="btn btn-sm btn-outline-primary dropdown-toggle" type="button" id="filterDropdown" data-bs-toggle="dropdown">
+        Filter by Category
+      </button>
+      <ul class="dropdown-menu">
+        <li><a class="dropdown-item" href="/admin/packages?category=all">All Packages</a></li>
+        <li><a class="dropdown-item" href="/admin/packages?category=international">International</a></li>
+        <li><a class="dropdown-item" href="/admin/packages?category=local">Local</a></li>
+        <li><a class="dropdown-item" href="/admin/packages?category=fixedDeparture">Fixed Departure</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="card-body">
+    <% if (packages.length === 0) { %>
+      <div class="text-center py-5">
+        <i class="fas fa-box-open fa-4x mb-3 text-muted"></i>
+        <h4>No packages found</h4>
+        <p class="text-muted">No travel packages in this category yet.</p>
+        <a href="/admin/packages/create" class="btn btn-primary mt-3">
+          <i class="fas fa-plus-circle me-1"></i> Create Package
+        </a>
+        <a href="/admin/packages/import/initial" class="btn btn-success mt-3 ms-2">
+          <i class="fas fa-download me-1"></i> Import Initial Data
+        </a>
+      </div>
+    <% } else { %>
+      <div class="table-responsive">
+        <table class="table table-bordered table-hover">
+          <thead class="table-light">
+            <tr>
+              <th>ID</th>
+              <th>Image</th>
+              <th>Destination</th>
+              <th>Duration</th>
+              <th>Price</th>
+              <th>Rating</th>
+              <th>Category</th>
+              <th width="160">Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% packages.forEach(pkg => { %>
+              <tr>
+                <td><%= pkg._id %></td>
+                <td>
+                  <% if (pkg.images && pkg.images.length > 0) { %>
+                    <img src="<%= pkg.images[0] %>" alt="<%= pkg.destination %>" class="img-thumbnail" style="width: 50px; height: 50px; object-fit: cover;">
+                  <% } else { %>
+                    <div class="bg-light text-center" style="width: 50px; height: 50px; line-height: 50px;">
+                      <i class="fas fa-image text-muted"></i>
+                    </div>
+                  <% } %>
+                </td>
+                <td><%= pkg.destination %></td>
+                <td><%= pkg.duration %> days</td>
+                <td>$<%= pkg.price %></td>
+                <td>
+                  <div class="text-warning">
+                    <% for (let i = 1; i <= 5; i++) { %>
+                      <% if (i <= Math.floor(pkg.rating)) { %>
+                        <i class="fas fa-star"></i>
+                      <% } else if (i - 0.5 <= pkg.rating) { %>
+                        <i class="fas fa-star-half-alt"></i>
+                      <% } else { %>
+                        <i class="far fa-star"></i>
+                      <% } %>
+                    <% } %>
+                    <span class="ms-1">(<%= pkg.rating %>)</span>
+                  </div>
+                </td>
+                <td>
+                  <% if (pkg.category === 'international') { %>
+                    <span class="badge bg-primary">International</span>
+                  <% } else if (pkg.category === 'local') { %>
+                    <span class="badge bg-success">Local</span>
+                  <% } else if (pkg.category === 'fixedDeparture') { %>
+                    <span class="badge bg-warning">Fixed Departure</span>
+                  <% } %>
+                </td>
+                <td>
+                  <div class="btn-group">
+                    <a href="/admin/packages/<%= pkg._id %>" class="btn btn-sm btn-info">
+                      <i class="fas fa-eye"></i>
+                    </a>
+                    <a href="/admin/packages/<%= pkg._id %>/edit" class="btn btn-sm btn-warning">
+                      <i class="fas fa-edit"></i>
+                    </a>
+                    <button type="button" class="btn btn-sm btn-danger" data-bs-toggle="modal" data-bs-target="#deleteModal<%= pkg._id %>">
+                      <i class="fas fa-trash"></i>
+                    </button>
+                  </div>
+                  
+                  <!-- Delete Modal -->
+                  <div class="modal fade" id="deleteModal<%= pkg._id %>" tabindex="-1" aria-hidden="true">
+                    <div class="modal-dialog">
+                      <div class="modal-content">
+                        <div class="modal-header">
+                          <h5 class="modal-title">Confirm Delete</h5>
+                          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                          <p>Are you sure you want to delete "<%= pkg.destination %>" package?</p>
+                          <p class="text-danger">This action cannot be undone.</p>
+                        </div>
+                        <div class="modal-footer">
+                          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                          <form action="/admin/packages/<%= pkg._id %>?_method=DELETE" method="POST">
+                            <button type="submit" class="btn btn-danger">Delete</button>
+                          </form>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </td>
+              </tr>
+            <% }); %>
+          </tbody>
+        </table>
+      </div>
+    <% } %>
+  </div>
+</div>
+
+<%- include('../../partials/footer') %>
