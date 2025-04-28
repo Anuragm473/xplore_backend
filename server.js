@@ -6,6 +6,7 @@ const path = require('path');
 const flash = require('connect-flash');
 const methodOverride = require('method-override');
 const connectDB = require('./config/db');
+const cors=require('cors')
 require('dotenv').config();
 
 
@@ -20,6 +21,11 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(methodOverride('_method'));
 app.use(express.static(path.join(__dirname, 'public')));
+
+app.use(cors({
+  origin: ['http://localhost:5173', 'https://www.xploreworld.in'],
+  credentials: true, // Allow cookies / sessions to be sent
+}));
 
 // Set up session
 app.use(session({
