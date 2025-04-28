@@ -23,8 +23,8 @@ app.use(methodOverride('_method'));
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use(cors({
-  origin: ['http://localhost:5173', 'https://www.xploreworld.in'],
-  credentials: true, // Allow cookies / sessions to be sent
+  origin: '*',
+  credentials: true,
 }));
 
 // Set up session
