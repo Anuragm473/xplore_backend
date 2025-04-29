@@ -50,7 +50,7 @@
         <div class="row no-gutters align-items-center">
           <div class="col mr-2">
             <div class="text-xs font-weight-bold text-info text-uppercase mb-1">
-              Local Packages
+              Domestic Packages
             </div>
             <div class="h5 mb-0 font-weight-bold text-gray-800"><%= packageCounts.local %></div>
           </div>
@@ -95,9 +95,6 @@
           <a href="/admin/packages?category=all" class="list-group-item list-group-item-action">
             <i class="fas fa-list me-2"></i> View All Packages
           </a>
-          <a href="/admin/packages/import/initial" class="list-group-item list-group-item-action">
-            <i class="fas fa-download me-2"></i> Import Initial Packages Data
-          </a>
         </div>
       </div>
     </div>
@@ -127,7 +124,7 @@
     const packageChart = new Chart(ctx, {
       type: 'bar',
       data: {
-        labels: ['International', 'Local', 'Fixed Departure'],
+        labels: ['International', 'Domestic', 'Fixed Departure'],
         datasets: [{
           label: 'Number of Packages',
           data: [

@@ -49,10 +49,10 @@ router.get('/create', ensureAuthenticated, ensureAdmin, (req, res) => {
 // POST route to handle form submission and manual image upload to Cloudinary
 router.post('/', ensureAuthenticated, ensureAdmin, async (req, res) => {
   try {
-    const { destination, category, duration, price, rating, description, images } = req.body;
+    const { destination, category, duration, price, rating, description, images,pax } = req.body;
 
     // Validate required fields
-    if (!destination || !category || !duration || !price || !rating || !description || !images) {
+    if (!destination || !category || !duration || !price || !rating || !description || !images || !pax) {
       return res.status(400).json({ error: 'All fields are required' });
     }
 
@@ -65,9 +65,10 @@ router.post('/', ensureAuthenticated, ensureAdmin, async (req, res) => {
     const newPackage = new Package({
       destination,
       category,
-      duration: parseInt(duration),
-      price: parseFloat(price),
-      rating: parseFloat(rating),
+      duration: duration,
+      price: price,
+      pax:pax,
+      rating: rating,
       description,
       images
     });
@@ -138,10 +139,10 @@ router.get('/:id/edit', ensureAuthenticated, ensureAdmin, async (req, res) => {
 // Update package
 router.put('/:id', ensureAuthenticated, ensureAdmin, async (req, res) => {
   try {
-    const { destination, duration, price, rating, description, category, images } = req.body;
+    const { destination, duration, price, rating, description, category, images,pax } = req.body;
     
     // Validate required fields
-    if (!destination || !category || !duration || !price || !rating || !description) {
+    if (!destination || !category || !duration || !price || !rating || !description || !pax) {
       return res.status(400).json({ error: 'All fields are required' });
     }
     
@@ -155,9 +156,10 @@ router.put('/:id', ensureAuthenticated, ensureAdmin, async (req, res) => {
       {
         destination,
         images,
-        duration: parseInt(duration),
-        price: parseFloat(price),
-        rating: parseFloat(rating),
+        duration: duration,
+        pax,
+        price: price,
+        rating: rating,
         description,
         category
       },

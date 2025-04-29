@@ -12,6 +12,10 @@ const PackageSchema = new mongoose.Schema({
     type: String, // Changed from String to Number for consistency
     required: true
   },
+  pax: {
+    type: String, // Changed from String to Number for consistency
+    required: true
+  },
   price: {
     type: String, // Changed from String to Number for consistency
     required: true

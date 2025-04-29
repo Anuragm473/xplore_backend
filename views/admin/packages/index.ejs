@@ -9,7 +9,7 @@
       <% } else if (category === 'international') { %>
         Showing international travel packages
       <% } else if (category === 'local') { %>
-        Showing local travel packages
+        Showing Domestic travel packages
       <% } else if (category === 'fixedDeparture') { %>
         Showing fixed departure travel packages
       <% } %>
@@ -32,7 +32,7 @@
       <ul class="dropdown-menu">
         <li><a class="dropdown-item" href="/admin/packages?category=all">All Packages</a></li>
         <li><a class="dropdown-item" href="/admin/packages?category=international">International</a></li>
-        <li><a class="dropdown-item" href="/admin/packages?category=local">Local</a></li>
+        <li><a class="dropdown-item" href="/admin/packages?category=local">Domestic</a></li>
         <li><a class="dropdown-item" href="/admin/packages?category=fixedDeparture">Fixed Departure</a></li>
       </ul>
     </div>
@@ -99,7 +99,7 @@
                   <% if (pkg.category === 'international') { %>
                     <span class="badge bg-primary">International</span>
                   <% } else if (pkg.category === 'local') { %>
-                    <span class="badge bg-success">Local</span>
+                    <span class="badge bg-success">Domestic</span>
                   <% } else if (pkg.category === 'fixedDeparture') { %>
                     <span class="badge bg-warning">Fixed Departure</span>
                   <% } %>
