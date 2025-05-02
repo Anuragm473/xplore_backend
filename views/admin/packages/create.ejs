@@ -38,11 +38,21 @@
           <label for="rating" class="form-label">Rating</label>
           <input type="number" class="form-control" id="rating" name="rating" min="1" max="5" step="0.1" required>
         </div>
-        <div class="col-md-6 mb-3">
-          <label for="pax" class="form-label">Pax</label>
-          <input type="text" class="form-control" id="pax" name="pax" required>
-        </div>        
       </div>
+
+      <!-- Fixed Departure Field (conditionally shown) -->
+      <div class="col-md-6 mb-3" id="fixedDepartureField" style="display: none;">
+        <label for="fixedDeparture" class="form-label">Fixed Departure Dates</label>
+        <input type="text" class="form-control" id="fixedDeparture" name="fixedDeparture">
+        <div class="form-text">Enter the dates when this trip will be available</div>
+      </div>
+
+      <div class="col-md-6 mb-3">
+        <label for="pax" class="form-label">Pax</label>
+        <input type="text" class="form-control" id="pax" name="pax" required>
+      </div>        
+    </div>
+        
       <div class="col-md-6 mb-3">
         <label for="duration" class="form-label">Duration</label>
         <input type="text" class="form-control" id="duration" name="duration" required>
@@ -79,6 +89,18 @@
 </div>
 
 <script>
+  // Show/hide fixed departure field based on category selection
+  document.getElementById('category').addEventListener('change', function() {
+    const fixedDepartureField = document.getElementById('fixedDepartureField');
+    if (this.value === 'fixedDeparture') {
+      fixedDepartureField.style.display = 'block';
+      document.getElementById('fixedDeparture').setAttribute('required', '');
+    } else {
+      fixedDepartureField.style.display = 'none';
+      document.getElementById('fixedDeparture').removeAttribute('required');
+    }
+  });
+
   // Image preview functionality
   document.getElementById('package_images').addEventListener('change', function(event) {
     const preview = document.getElementById('image-preview');
@@ -161,16 +183,20 @@
       
       // Prepare the package data
       const packageData = {
-  destination: document.getElementById('destination').value,
-  category: document.getElementById('category').value,
-  duration: document.getElementById('duration').value,
-  price: document.getElementById('price').value,
-  rating: document.getElementById('rating').value,
-  pax: document.getElementById('pax').value, // <-- New field added here
-  description: document.getElementById('description').value,
-  images: imageUrls
-};
+        pax:document.getElementById('pax').value,
+        destination: document.getElementById('destination').value,
+        category: document.getElementById('category').value,
+        duration: document.getElementById('duration').value,
+        price: document.getElementById('price').value,
+        rating: document.getElementById('rating').value,
+        description: document.getElementById('description').value,
+        images: imageUrls
+      };
 
+      // Add fixed departure data if category is fixedDeparture
+      if (document.getElementById('category').value === 'fixedDeparture') {
+        packageData.fixedDeparture = document.getElementById('fixedDeparture').value;
+      }
       
       submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin me-1"></i> Creating package...';
       

@@ -75,6 +75,12 @@
               <th>Price</th>
               <td><%= packageItem.price %></td>
             </tr>
+            <% if (packageItem.fixedDeparture) { %>
+            <tr>
+              <th>Departure Date</th>
+              <td><%= packageItem.fixedDeparture %></td>
+            </tr>
+            <% } %>
             <tr>
               <th>Rating</th>
               <td>

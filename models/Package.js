@@ -16,6 +16,9 @@ const PackageSchema = new mongoose.Schema({
     type: String, // Changed from String to Number for consistency
     required: true
   },
+  fixedDeparture: {
+    type: String, // Changed from String to Number for consistency
+  },
   price: {
     type: String, // Changed from String to Number for consistency
     required: true

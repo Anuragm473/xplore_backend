@@ -49,9 +49,10 @@ router.get('/create', ensureAuthenticated, ensureAdmin, (req, res) => {
 // POST route to handle form submission and manual image upload to Cloudinary
 router.post('/', ensureAuthenticated, ensureAdmin, async (req, res) => {
   try {
-    const { destination, category, duration, price, rating, description, images,pax } = req.body;
+    const { destination, category, duration, price, rating, description, images,pax,fixedDeparture } = req.body;
 
     // Validate required fields
+    console.log(req.body)
     if (!destination || !category || !duration || !price || !rating || !description || !images || !pax) {
       return res.status(400).json({ error: 'All fields are required' });
     }
@@ -68,6 +69,7 @@ router.post('/', ensureAuthenticated, ensureAdmin, async (req, res) => {
       duration: duration,
       price: price,
       pax:pax,
+      fixedDeparture,
       rating: rating,
       description,
       images
@@ -139,10 +141,10 @@ router.get('/:id/edit', ensureAuthenticated, ensureAdmin, async (req, res) => {
 // Update package
 router.put('/:id', ensureAuthenticated, ensureAdmin, async (req, res) => {
   try {
-    const { destination, duration, price, rating, description, category, images,pax } = req.body;
+    const { destination, duration, price, rating, description, category, images,pax,fixedDeparture } = req.body;
     
     // Validate required fields
-    if (!destination || !category || !duration || !price || !rating || !description || !pax) {
+    if (!destination || !category || !duration || !price || !rating || !description || !pax || !fixedDeparture) {
       return res.status(400).json({ error: 'All fields are required' });
     }
     
@@ -158,6 +160,7 @@ router.put('/:id', ensureAuthenticated, ensureAdmin, async (req, res) => {
         images,
         duration: duration,
         pax,
+        fixedDeparture,
         price: price,
         rating: rating,
         description,
