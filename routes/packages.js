@@ -11,7 +11,7 @@ router.get('/api/cloudinary-config', (req, res) => {
   res.json({
     cloudName: process.env.CLOUDINARY_CLOUD_NAME,
     apiKey: process.env.CLOUDINARY_API_KEY,
-    uploadPreset: 'Caterersnearme' 
+    uploadPreset: 'xploreworld' 
   });
 });
 
@@ -49,7 +49,7 @@ router.get('/create', ensureAuthenticated, ensureAdmin, (req, res) => {
 // POST route to handle form submission and manual image upload to Cloudinary
 router.post('/', ensureAuthenticated, ensureAdmin, async (req, res) => {
   try {
-    const { destination, category, duration, price, rating, description, images,pax,fixedDeparture } = req.body;
+    const { destination, category, duration ,valid, price, rating, description, images,pax,fixedDeparture } = req.body;
 
     // Validate required fields
     console.log(req.body)
@@ -69,6 +69,7 @@ router.post('/', ensureAuthenticated, ensureAdmin, async (req, res) => {
       duration: duration,
       price: price,
       pax:pax,
+      valid,
       fixedDeparture,
       rating: rating,
       description,
@@ -141,7 +142,7 @@ router.get('/:id/edit', ensureAuthenticated, ensureAdmin, async (req, res) => {
 // Update package
 router.put('/:id', ensureAuthenticated, ensureAdmin, async (req, res) => {
   try {
-    const { destination, duration, price, rating, description, category, images,pax,fixedDeparture } = req.body;
+    const { destination, duration, price, rating, description,valid, category, images,pax,fixedDeparture } = req.body;
     
     // Validate required fields
     if (!destination || !category || !duration || !price || !rating || !description || !pax || !fixedDeparture) {
@@ -160,6 +161,7 @@ router.put('/:id', ensureAuthenticated, ensureAdmin, async (req, res) => {
         images,
         duration: duration,
         pax,
+        valid,
         fixedDeparture,
         price: price,
         rating: rating,

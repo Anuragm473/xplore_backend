@@ -23,10 +23,12 @@ router.get('/login', (req, res) => {
 router.post('/login', async (req, res) => {
   try {
     const { username, password } = req.body;
+    console.log('exe')
     
     // Validation
     if (!username || !password) {
       req.flash('error_msg', 'Please enter all fields');
+      console.log('not')
       return res.redirect('/login');
     }
     
@@ -34,12 +36,14 @@ router.post('/login', async (req, res) => {
     const user = await User.findOne({ username });
     if (!user) {
       req.flash('error_msg', 'Invalid credentials');
+      console.log('not 1')
       return res.redirect('/login');
     }
     
     // Verify password
     const isMatch = await user.comparePassword(password);
     if (!isMatch) {
+      console.log('not 2')
       req.flash('error_msg', 'Invalid credentials');
       return res.redirect('/login');
     }

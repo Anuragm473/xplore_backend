@@ -23,6 +23,9 @@ const PackageSchema = new mongoose.Schema({
     type: String, // Changed from String to Number for consistency
     required: true
   },
+  valid: {
+    type: String, // Changed from String to Number for consistency
+  },
   rating: {
     type: Number,
     required: true,
