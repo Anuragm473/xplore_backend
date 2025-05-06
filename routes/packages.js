@@ -51,8 +51,7 @@ router.post('/', ensureAuthenticated, ensureAdmin, async (req, res) => {
   try {
     const { destination, category, duration ,valid, price, rating, description, images,pax,fixedDeparture } = req.body;
 
-    // Validate required fields
-    console.log(req.body)
+
     if (!destination || !category || !duration || !price || !rating || !description || !images || !pax) {
       return res.status(400).json({ error: 'All fields are required' });
     }

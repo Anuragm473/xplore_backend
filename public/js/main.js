@@ -17,7 +17,5 @@ document.addEventListener('DOMContentLoaded', function() {
     const dropdownList = dropdownElementList.map(function(dropdownToggleEl) {
       return new bootstrap.Dropdown(dropdownToggleEl);
     });
-    
-    // Add any custom JavaScript for your travel agency admin here
-    console.log('Travel Agency Admin JS initialized');
+
   });
