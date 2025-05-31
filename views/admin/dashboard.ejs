@@ -79,6 +79,23 @@
       </div>
     </div>
   </div>
+  <div class="col-xl-3 col-md-6 mb-4">
+    <div class="card border-left-info shadow h-100 py-2">
+      <div class="card-body">
+        <div class="row no-gutters align-items-center">
+          <div class="col mr-2">
+            <div class="text-xs font-weight-bold text-info text-uppercase mb-1">
+              Event Packages
+            </div>
+            <div class="h5 mb-0 font-weight-bold text-gray-800"><%= packageCounts.event %></div>
+          </div>
+          <div class="col-auto">
+            <i class="fas fa-map-marked-alt fa-2x text-gray-300"></i>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
 
 <div class="row mt-4">
@@ -124,23 +141,26 @@
     const packageChart = new Chart(ctx, {
       type: 'bar',
       data: {
-        labels: ['International', 'Domestic', 'Fixed Departure'],
+        labels: ['International', 'Domestic', 'Fixed Departure', 'Event'],
         datasets: [{
           label: 'Number of Packages',
           data: [
         Number(packageCounts.international || 0),
         Number(packageCounts.local || 0),
-        Number(packageCounts.fixedDeparture || 0)
+        Number(packageCounts.fixedDeparture || 0),
+        Number(packageCounts.event || 0)
         ],
           backgroundColor: [
             'rgba(54, 162, 235, 0.5)',
             'rgba(75, 192, 192, 0.5)',
-            'rgba(255, 206, 86, 0.5)'
+            'rgba(255, 206, 86, 0.5)',
+            'rgba(255, 206, 0, 0.5)'
           ],
           borderColor: [
             'rgba(54, 162, 235, 1)',
             'rgba(75, 192, 192, 1)',
-            'rgba(255, 206, 86, 1)'
+            'rgba(255, 206, 86, 1)',
+             'rgba(255, 206, 0, 1)'
           ],
           borderWidth: 1
         }]

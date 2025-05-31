@@ -143,10 +143,7 @@ router.put('/:id', ensureAuthenticated, ensureAdmin, async (req, res) => {
   try {
     const { destination, duration, price, rating, description,valid, category, images,pax,fixedDeparture } = req.body;
     
-    // Validate required fields
-    if (!destination || !category || !duration || !price || !rating || !description || !pax || !fixedDeparture) {
-      return res.status(400).json({ error: 'All fields are required' });
-    }
+
     
     // Validate images array
     if (!Array.isArray(images) || images.length === 0) {

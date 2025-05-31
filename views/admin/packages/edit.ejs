@@ -22,6 +22,7 @@
             <option value="international" <%= packageItem.category === 'international' ? 'selected' : '' %>>International</option>
             <option value="local" <%= packageItem.category === 'local' ? 'selected' : '' %>>Domestic</option>
             <option value="fixedDeparture" <%= packageItem.category === 'fixedDeparture' ? 'selected' : '' %>>Fixed Departure</option>
+            <option value="event" <%= packageItem.category === 'event' ? 'selected' : '' %>>Event</option>
           </select>
         </div>
       </div>
@@ -277,7 +278,8 @@
       
       if (!response.ok) {
         const errorData = await response.json();
-        throw new Error(errorData.message || 'Failed to update package');
+        console.log('Error response:', errorData);
+        throw new Error(errorData || 'Failed to update package');
       }
       
       // Success - redirect to view page

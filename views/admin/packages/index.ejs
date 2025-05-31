@@ -12,6 +12,8 @@
         Showing Domestic travel packages
       <% } else if (category === 'fixedDeparture') { %>
         Showing fixed departure travel packages
+      <% }else if (category === 'event') { %>
+        Showing Events travel packages
       <% } %>
     </p>
   </div>
@@ -34,6 +36,7 @@
         <li><a class="dropdown-item" href="/admin/packages?category=international">International</a></li>
         <li><a class="dropdown-item" href="/admin/packages?category=local">Domestic</a></li>
         <li><a class="dropdown-item" href="/admin/packages?category=fixedDeparture">Fixed Departure</a></li>
+        <li><a class="dropdown-item" href="/admin/packages?category=event">Event</a></li>
       </ul>
     </div>
   </div>
@@ -102,6 +105,8 @@
                     <span class="badge bg-success">Domestic</span>
                   <% } else if (pkg.category === 'fixedDeparture') { %>
                     <span class="badge bg-warning">Fixed Departure</span>
+                  <% }else if (pkg.category === 'event') { %>
+                    <span class="badge bg-warning">Event</span>
                   <% } %>
                 </td>
                 <td>

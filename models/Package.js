@@ -39,7 +39,7 @@ const PackageSchema = new mongoose.Schema({
   category: {
     type: String,
     required: true,
-    enum: ['international', 'local', 'fixedDeparture']
+    enum: ['international', 'local', 'fixedDeparture','event']
   },
   createdAt: {
     type: Date,

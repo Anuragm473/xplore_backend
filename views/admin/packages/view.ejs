@@ -10,6 +10,8 @@
         <span class="badge bg-success">Domestic</span>
       <% } else if (packageItem.category === 'fixedDeparture') { %>
         <span class="badge bg-warning">Fixed Departure</span>
+      <% }else if (packageItem.category === 'event') { %>
+        <span class="badge bg-warning">Event</span>
       <% } %>
       Package #<%= packageItem.id %>
     </p>
@@ -111,6 +113,8 @@
                   <span class="badge bg-success">Domestic</span>
                 <% } else if (packageItem.category === 'fixedDeparture') { %>
                   <span class="badge bg-warning">Fixed Departure</span>
+                <% }else if (packageItem.category === 'event') { %>
+                  <span class="badge bg-warning">Event</span>
                 <% } %>
               </td>
             </tr>
